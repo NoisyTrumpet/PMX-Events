@@ -20,12 +20,34 @@ const Layout = ({ children }) => {
           title
         }
       }
+      allWpMenuItem(filter: { locations: { eq: PRIMARY } }) {
+        edges {
+          node {
+            url
+            title
+            target
+            childItems {
+              nodes {
+                url
+                title
+                target
+                path
+                label
+              }
+            }
+            label
+          }
+        }
+      }
     }
   `)
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
+      <Header
+        siteTitle={data.site.siteMetadata?.title || `Title`}
+        menuItems={data.allWpMenuItem}
+      />
       <div
         style={{
           margin: `0 auto`,

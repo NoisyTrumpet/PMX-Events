@@ -4,6 +4,10 @@ module.exports = {
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
   },
+  flags: {
+    DEV_SSR: true,
+    FAST_DEV: true,
+  },
   plugins: [
     {
       /**
@@ -17,9 +21,16 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         // the only required plugin option for WordPress is the GraphQL url.
-        url:
-          process.env.WPGRAPHQL_URL ||
-          `https://pmxevents.com/graphql`,
+        url: process.env.WPGRAPHQL_URL || `https://pmxevents.com/graphql`,
+        develop: {
+          hardCacheData: true,
+        },
+        auth: {
+          htaccess: {
+            username: process.env.HTTPBASICAUTH_USERNAME,
+            password: process.env.HTTPBASICAUTH_PASSWORD,
+          },
+        },
       },
     },
     `gatsby-plugin-react-helmet`,
@@ -46,6 +57,8 @@ module.exports = {
       },
     },
     `gatsby-plugin-gatsby-cloud`,
+    // Chakra UI:
+    `@chakra-ui/gatsby-plugin`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
